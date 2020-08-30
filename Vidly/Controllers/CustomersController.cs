@@ -25,14 +25,14 @@ namespace Vidly.Controllers
             var customers =  await _context.Customers.
                 Include(c => c.MembershipType).ToListAsync();
 
-            //Select * from Customers 
-
             return View(customers);
         }
         
         public async Task<IActionResult> Details(int id)
         {
-            var customer = await _context.Customers.SingleOrDefaultAsync(c => c.Id == id);
+            var customer = await _context.Customers
+                .Include(c => c.MembershipType)
+                .SingleOrDefaultAsync(c => c.Id == id);
 
             if (customer == null)
                 return NotFound();
