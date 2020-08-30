@@ -7,8 +7,20 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200829195457_InitialModel.cs" />
     <Compile Remove="Migrations\20200829195457_InitialModel.Designer.cs" />
+    <Compile Remove="Migrations\20200829231305_AddMembershipType.cs" />
+    <Compile Remove="Migrations\20200829231305_AddMembershipType.Designer.cs" />
     <Compile Remove="Migrations\20200830051816_PopulateMembershipTypes.cs" />
     <Compile Remove="Migrations\20200830051816_PopulateMembershipTypes.Designer.cs" />
+    <Compile Remove="Migrations\20200830052017_RenameMembershipTypesDataset.cs" />
+    <Compile Remove="Migrations\20200830052017_RenameMembershipTypesDataset.Designer.cs" />
+    <Compile Remove="Migrations\20200830052658_RemoveMembershipType.cs" />
+    <Compile Remove="Migrations\20200830052658_RemoveMembershipType.Designer.cs" />
+    <Compile Remove="Migrations\20200830053434_PopulateMembershipTypes.cs" />
+    <Compile Remove="Migrations\20200830053434_PopulateMembershipTypes.Designer.cs" />
+    <Compile Remove="Migrations\20200830053608_PopulateMembershipTypesWithMoreData.cs" />
+    <Compile Remove="Migrations\20200830053608_PopulateMembershipTypesWithMoreData.Designer.cs" />
+    <Compile Remove="Migrations\20200830061335_ApplyAnnotationsToCustomerName.cs" />
+    <Compile Remove="Migrations\20200830061335_ApplyAnnotationsToCustomerName.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

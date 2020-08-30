@@ -9,8 +9,8 @@ using Vidly.Persistence;
 namespace Vidly.Migrations
 {
     [DbContext(typeof(VidlyDbContext))]
-    [Migration("20200830061335_ApplyAnnotationsToCustomerName")]
-    partial class ApplyAnnotationsToCustomerName
+    [Migration("20200830165027_PopulateMembershipTypes")]
+    partial class PopulateMembershipTypes
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -72,7 +72,9 @@ namespace Vidly.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
 
                     b.HasKey("Id");
 

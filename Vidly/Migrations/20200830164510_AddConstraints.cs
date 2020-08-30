@@ -2,10 +2,28 @@
 
 namespace Vidly.Migrations
 {
-    public partial class AddMembershipType : Migration
+    public partial class AddConstraints : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterColumn<string>(
+                name: "Name",
+                table: "Movies",
+                maxLength: 255,
+                nullable: false,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)",
+                oldNullable: true);
+
+            migrationBuilder.AlterColumn<string>(
+                name: "Name",
+                table: "Customers",
+                maxLength: 255,
+                nullable: false,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)",
+                oldNullable: true);
+
             migrationBuilder.AddColumn<byte>(
                 name: "MembershipTypeId",
                 table: "Customers",
@@ -13,7 +31,7 @@ namespace Vidly.Migrations
                 defaultValue: (byte)0);
 
             migrationBuilder.CreateTable(
-                name: "MembershipType",
+                name: "MembershipTypes",
                 columns: table => new
                 {
                     Id = table.Column<byte>(nullable: false),
@@ -23,7 +41,7 @@ namespace Vidly.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MembershipType", x => x.Id);
+                    table.PrimaryKey("PK_MembershipTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateIndex(
@@ -32,10 +50,10 @@ namespace Vidly.Migrations
                 column: "MembershipTypeId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Customers_MembershipType_MembershipTypeId",
+                name: "FK_Customers_MembershipTypes_MembershipTypeId",
                 table: "Customers",
                 column: "MembershipTypeId",
-                principalTable: "MembershipType",
+                principalTable: "MembershipTypes",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
         }
@@ -43,11 +61,11 @@ namespace Vidly.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Customers_MembershipType_MembershipTypeId",
+                name: "FK_Customers_MembershipTypes_MembershipTypeId",
                 table: "Customers");
 
             migrationBuilder.DropTable(
-                name: "MembershipType");
+                name: "MembershipTypes");
 
             migrationBuilder.DropIndex(
                 name: "IX_Customers_MembershipTypeId",
@@ -56,6 +74,22 @@ namespace Vidly.Migrations
             migrationBuilder.DropColumn(
                 name: "MembershipTypeId",
                 table: "Customers");
+
+            migrationBuilder.AlterColumn<string>(
+                name: "Name",
+                table: "Movies",
+                type: "nvarchar(max)",
+                nullable: true,
+                oldClrType: typeof(string),
+                oldMaxLength: 255);
+
+            migrationBuilder.AlterColumn<string>(
+                name: "Name",
+                table: "Customers",
+                type: "nvarchar(max)",
+                nullable: true,
+                oldClrType: typeof(string),
+                oldMaxLength: 255);
         }
     }
 }
