@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Vidly.Domain;
 using Vidly.Models;
 using Vidly.Persistence;
 
@@ -29,6 +30,15 @@ namespace Vidly.Controllers
                 MembershipTypes = membershipTypes
             };
             return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Create(Customer customer)
+        {
+            _context.Customers.Add(customer);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Customers");
         }
 
         public async Task <IActionResult> Index()
