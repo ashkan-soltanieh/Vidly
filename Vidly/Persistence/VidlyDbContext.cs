@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Vidly.Models;
+using Vidly.Domain;
 
 namespace Vidly.Persistence
 {
@@ -14,5 +14,7 @@ namespace Vidly.Persistence
 
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Movie> Movies { get; set; }
+
+        public DbSet<MembershipType> MembershipTypes { get; set; }
     }
 }

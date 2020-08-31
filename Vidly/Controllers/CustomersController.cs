@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Vidly.Models;
 using Vidly.Persistence;
 
 namespace Vidly.Controllers
@@ -18,6 +19,16 @@ namespace Vidly.Controllers
         protected override void Dispose(bool disposing)
         {
             _context.Dispose();
+        }
+
+        public async Task<IActionResult> New()
+        {
+            var membershipTypes = await _context.MembershipTypes.ToListAsync();
+            var viewModel = new NewCustomerViewModel
+            {
+                MembershipTypes = membershipTypes
+            };
+            return View(viewModel);
         }
 
         public async Task <IActionResult> Index()

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Vidly.Models;
+using Vidly.Domain;
 using Vidly.Persistence;
 
 namespace Vidly.Controllers

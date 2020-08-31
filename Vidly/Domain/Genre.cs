@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Vidly.Models
+namespace Vidly.Domain
 {
     [Table("Genres")]
     public class Genre
