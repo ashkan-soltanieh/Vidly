@@ -25,14 +25,18 @@ namespace Vidly.Controllers
         public async Task<IActionResult> Index()
         {
 
-            var movies = await _context.Movies.ToListAsync();
+            var movies = await _context.Movies
+                .Include(m => m.Genre)
+                .ToListAsync();
 
             return View(movies);
         }
 
         public async Task<IActionResult> Details(int id)
         {
-            var movie = await _context.Movies.SingleOrDefaultAsync(c => c.Id == id);
+            var movie = await _context.Movies
+                .Include(m=>m.Genre)
+                .SingleOrDefaultAsync(c => c.Id == id);
 
             if (movie == null)
             {

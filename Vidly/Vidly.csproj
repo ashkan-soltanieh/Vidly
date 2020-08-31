@@ -21,6 +21,8 @@
     <Compile Remove="Migrations\20200830053608_PopulateMembershipTypesWithMoreData.Designer.cs" />
     <Compile Remove="Migrations\20200830061335_ApplyAnnotationsToCustomerName.cs" />
     <Compile Remove="Migrations\20200830061335_ApplyAnnotationsToCustomerName.Designer.cs" />
+    <Compile Remove="Migrations\20200830233557_AddGenresAndReferencedToMovies.cs" />
+    <Compile Remove="Migrations\20200830233557_AddGenresAndReferencedToMovies.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
