@@ -1,10 +1,10 @@
 ﻿@model Vidly.Models.CustomerFormViewModel
 @{
-    ViewData["Title"] = "New";
+    ViewData["Title"] = Model.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>New Customer</h1>
+<h1>@Model.Title</h1>
 
 @using (Html.BeginForm("Save", "Customers"))
 {
@@ -12,12 +12,14 @@
         @Html.LabelFor(m => m.Customer.Name)
         @Html.TextBoxFor(m =>
             m.Customer.Name, new { @class = "form-control col-md-4" })
+        @Html.ValidationMessageFor(m => m.Customer.Name)
     </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.Customer.BirthDate)
         @Html.TextBoxFor(m =>
             m.Customer.BirthDate, "{0: d MMM, yyyy}", new { @class = "form-control col-md-4" })
+        @Html.ValidationMessageFor(m=>m.Customer.BirthDate)
     </div>
 
 
@@ -28,7 +30,7 @@
             m.Customer.MembershipTypeId, new SelectList(
                 Model.MembershipTypes,
                 "Id",
-                "Name"),
+                "Name"), 
             "Select Membership Type",
             new { @class = "form-control col-md-4" })
     </div>
@@ -41,6 +43,6 @@
 
     @Html.HiddenFor(m=>m.Customer.Id)
 
-    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="submit" class="btn btn-primary mt-2">Save</button>
 }
 

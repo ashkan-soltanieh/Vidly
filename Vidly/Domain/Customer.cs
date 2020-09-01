@@ -7,7 +7,7 @@ namespace Vidly.Domain
     {
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please enter the Name.")]
         [StringLength(255)]
         public string Name { get; set; }
 
@@ -19,7 +19,7 @@ namespace Vidly.Domain
 
         public MembershipType MembershipType { get; set; } //Navigation 
 
-        [Display(Name = "Membership type")]
+        [Display(Name = "Membership Type")]
         public byte MembershipTypeId { get; set; }
     }
 }

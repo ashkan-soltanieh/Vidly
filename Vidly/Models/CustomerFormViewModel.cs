@@ -10,5 +10,7 @@ namespace Vidly.Models
     {
         public IEnumerable<MembershipType> MembershipTypes { get; set; }
         public Customer Customer { get; set;   }
+
+        public string Title => (Customer != null && Customer.Id != 0) ? "Edit Customer" : "Add Customer" ;
     }
 }

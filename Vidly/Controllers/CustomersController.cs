@@ -35,10 +35,21 @@ namespace Vidly.Controllers
         [HttpPost]
         public async Task<IActionResult> Save(Customer customer)
         {
-            if (customer.Id == 0) //new customer
+            if (!ModelState.IsValid) //if invalid customer
+            {
+                var viewModel = new CustomerFormViewModel
+                {
+                    Customer = customer,
+                    MembershipTypes = await _context.MembershipTypes.ToListAsync()
+                };
+
+                return View("CustomerForm", viewModel);
+            }
+
+            if (customer.Id == 0) //add new valid customer
                 await _context.Customers.AddAsync(customer);
 
-            else
+            else //edit valid customer
             {
                 var customerInDb = await _context.Customers.
                     SingleAsync(c => c.Id == customer.Id);
