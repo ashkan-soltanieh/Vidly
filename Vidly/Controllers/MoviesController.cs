@@ -86,7 +86,8 @@ namespace Vidly.Controllers
             }
             else
             {
-                var movieInDb = await _context.Movies.SingleAsync(m => m.Id == movie.Id);
+                var movieInDb = await _context.Movies.
+                    SingleAsync(m => m.Id == movie.Id);
                 movieInDb.Name = movie.Name;
                 movieInDb.ReleaseDate = movie.ReleaseDate;
                 movieInDb.GenreId = movie.GenreId;
@@ -95,7 +96,7 @@ namespace Vidly.Controllers
 
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Movies");
         }
     }
 }
