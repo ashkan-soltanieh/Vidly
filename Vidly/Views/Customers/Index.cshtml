@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Vidly.Domain.Customer>
+﻿@using Vidly.Controllers
+@model IEnumerable<Vidly.Domain.Customer>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -25,7 +26,12 @@
                 {
                 <tr>
                     <td>
-                        <a href="/customers/details/@customer.Id">@customer.Name</a>
+                        @Html.ActionLink(
+                            customer.Name, 
+                            "Edit",
+                            "Customers", 
+                            new {id=customer.Id}, 
+                            null)
                     </td>
                     <td>
                         @customer.MembershipType.Name

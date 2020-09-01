@@ -25,18 +25,30 @@ namespace Vidly.Controllers
         public async Task<IActionResult> New()
         {
             var membershipTypes = await _context.MembershipTypes.ToListAsync();
-            var viewModel = new NewCustomerViewModel
+            var viewModel = new CustomerFormViewModel
             {
                 MembershipTypes = membershipTypes
             };
-            return View(viewModel);
+            return View("CustomerForm",viewModel);
         }
 
         [HttpPost]
-        public IActionResult Create(Customer customer)
+        public async Task<IActionResult> Save(Customer customer)
         {
-            _context.Customers.Add(customer);
-            _context.SaveChanges();
+            if (customer.Id == 0) //new customer
+                await _context.Customers.AddAsync(customer);
+
+            else
+            {
+                var customerInDb = await _context.Customers.
+                    SingleAsync(c => c.Id == customer.Id);
+                customerInDb.Name = customer.Name;
+                customerInDb.BirthDate = customer.BirthDate;
+                customerInDb.MembershipTypeId = customer.MembershipTypeId;
+                customerInDb.IsSubscribedToNewsLetter = customer.IsSubscribedToNewsLetter;
+            }
+
+            await _context.SaveChangesAsync();
 
             return RedirectToAction("Index", "Customers");
         }
@@ -59,6 +71,23 @@ namespace Vidly.Controllers
                 return NotFound();
 
             return View(customer);
+        }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var customer = await _context.Customers.
+                SingleOrDefaultAsync(c => c.Id == id);
+            
+            if (customer == null)
+                return NotFound();
+
+            var viewModel = new CustomerFormViewModel
+            {
+                Customer = customer,
+                MembershipTypes = await _context.MembershipTypes.ToListAsync()
+            };
+            
+            return View("CustomerForm", viewModel);
         }
     }
 }
