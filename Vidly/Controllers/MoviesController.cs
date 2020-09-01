@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Vidly.Domain;
+using Vidly.Models;
 using Vidly.Persistence;
 
 namespace Vidly.Controllers
@@ -44,6 +45,35 @@ namespace Vidly.Controllers
             }
 
             return View(movie);
+        }
+
+
+        public async Task<IActionResult> New()
+        {
+            var genres = await _context.Genres.ToListAsync();
+            var viewModel = new MovieFormViewModel
+            {
+                Genres = genres
+            };
+            return View("MovieForm" ,viewModel);
+        }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var movie = await _context.Movies.SingleOrDefaultAsync(m => m.Id == id);
+            
+            if (movie == null)
+                return NotFound();
+            
+            var genres = await _context.Genres.ToListAsync();
+            
+            var viewModel = new MovieFormViewModel
+            {
+                Movie = movie,
+                Genres = genres
+            };
+
+            return View("MovieForm", viewModel);
         }
     }
 }
