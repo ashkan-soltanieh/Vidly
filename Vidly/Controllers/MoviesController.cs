@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -60,7 +59,8 @@ namespace Vidly.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            var movie = await _context.Movies.SingleOrDefaultAsync(m => m.Id == id);
+            var movie = await _context.Movies.
+                SingleOrDefaultAsync(m => m.Id == id);
             
             if (movie == null)
                 return NotFound();
@@ -74,6 +74,28 @@ namespace Vidly.Controllers
             };
 
             return View("MovieForm", viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Save(Movie movie)
+        {
+            if (movie.Id == 0)
+            {
+                movie.DateAdded = DateTime.Now;
+                await _context.Movies.AddAsync(movie);
+            }
+            else
+            {
+                var movieInDb = await _context.Movies.SingleAsync(m => m.Id == movie.Id);
+                movieInDb.Name = movie.Name;
+                movieInDb.ReleaseDate = movie.ReleaseDate;
+                movieInDb.GenreId = movie.GenreId;
+                movieInDb.NumberInStock = movie.NumberInStock;
+            }
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
         }
     }
 }
