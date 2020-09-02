@@ -50,7 +50,8 @@ namespace Vidly.Controllers
         public async Task<IActionResult> New()
         {
             var genres = await _context.Genres.ToListAsync();
-            var viewModel = new MovieFormViewModel
+
+            var viewModel = new MovieFormViewModel()
             {
                 Genres = genres
             };
@@ -67,9 +68,8 @@ namespace Vidly.Controllers
             
             var genres = await _context.Genres.ToListAsync();
             
-            var viewModel = new MovieFormViewModel
+            var viewModel = new MovieFormViewModel(movie)
             {
-                Movie = movie,
                 Genres = genres
             };
 
@@ -79,6 +79,15 @@ namespace Vidly.Controllers
         [HttpPost]
         public async Task<IActionResult> Save(Movie movie)
         {
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new MovieFormViewModel(movie)
+                {
+                    Genres = await _context.Genres.ToListAsync()
+                };
+                return View("MovieForm",viewModel);
+            }
+
             if (movie.Id == 0)
             {
                 movie.DateAdded = DateTime.Now;

@@ -20,9 +20,9 @@ namespace Vidly.Domain
         public DateTime DateAdded { get; set; }
 
         [Display(Name = "Number In Stock")]
+        [Range(1, 20)]
         public int NumberInStock { get; set; }
 
-        [Required]
         public Genre Genre { get; set; }
 
         [Display(Name = "Genre")]
