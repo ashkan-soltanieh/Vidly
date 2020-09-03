@@ -73,7 +73,7 @@ namespace Vidly.Controllers.Api
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            customerInDb = _mapper.Map<Customer>(customerDto);
+            _mapper.Map<CustomerDto,Customer>(customerDto, customerInDb);
 
             _context.SaveChanges();
 

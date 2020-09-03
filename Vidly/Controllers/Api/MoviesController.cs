@@ -73,8 +73,8 @@ namespace Vidly.Controllers.Api
 
             if (!ModelState.IsValid)
                 return BadRequest();
-
-            movieInDb = _mapper.Map<Movie>(movieDto);
+            
+            _mapper.Map<MovieDto, Movie>(movieDto, movieInDb);
 
             await _context.SaveChangesAsync();
 
