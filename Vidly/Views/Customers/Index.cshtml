@@ -1,5 +1,4 @@
 ﻿@using Vidly.Controllers
-@model IEnumerable<Vidly.Domain.Customer>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -14,40 +13,63 @@
     null,
     new{@class = "btn btn-primary"})
 
-@if (!Model.Any())
-    {
-        <text>We don't have any customers yet.</text>
-    }
+<table id="customers" class="table table-bordered table-hover mt-2">
+    <thead>
+    <tr>
+        <th>Customer</th>
+        <th>Membership Type</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
 
-    else
-    {
-        <table class="table table-bordered table-hover mt-2">
-            <thead>
-                <tr>
-                    <th>Customer</th>
-                    <th>Discount Rate</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var customer in Model)
+@section Scripts
+{
+    <script>
+        $(document).ready(function() {
+            $("#customers").DataTable(
                 {
-                <tr>
-                    <td>
-                        @Html.ActionLink(
-                            customer.Name, 
-                            "Edit",
-                            "Customers", 
-                            new {id=customer.Id}, 
-                            null)
-                    </td>
-                    <td>
-                        @customer.MembershipType.Name
-                    </td>
-                </tr>
+                    ajax: {
+                        url: "/api/customers",
+                        dataSrc: ""
+                    },
+                    columns: [
+                        {
+                            data: "name",
+                            render: function(data, type, customer) {
+                                return `<a href="/customers/edit/"${customer.id}">${customer.name}</a>`;
+                            }
+                        },
+                        {
+                            data: "name" //To be fixed to MembershipType.name
+                        },
+                        {
+                            data: "id",
+                            render: function(data) {
+                                return `<button data-customer-id="${data}" class="btn btn-link js-delete">Delete</button>`;
+                            }
+                        }
+                    ]
+                });
+        $("#customers").on("click",
+            ".js-delete",
+            async function() {
+                var button = $(this);
+                if (await swal({ text: 'Are you sure?', buttons: true })) {
+                    $.ajax({
+                        url: "/api/customers/" + $(this).attr("data-customer-id"),
+                        method: "DELETE",
+                        success: function() {
+                            button.parents("tr").remove();
+                        }
+                    });
                 }
-            </tbody>
-        </table>
-    }
+            });
+        });
+    </script>
+}
 
 
 

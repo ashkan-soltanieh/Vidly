@@ -65,12 +65,10 @@ namespace Vidly.Controllers
             return RedirectToAction("Index", "Customers");
         }
 
-        public async Task <IActionResult> Index()
+        public IActionResult Index()
         {
-            var customers =  await _context.Customers.
-                Include(c => c.MembershipType).ToListAsync();
 
-            return View(customers);
+            return View();
         }
         
         public async Task<IActionResult> Details(int id)
