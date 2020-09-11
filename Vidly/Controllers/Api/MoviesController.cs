@@ -28,7 +28,9 @@ namespace Vidly.Controllers.Api
         public async Task<IActionResult> GetMovies()
         {
             var movies = 
-                (await _context.Movies.ToListAsync())
+                (await _context.Movies
+                    .Include(m=> m.Genre)
+                    .ToListAsync())
                 .Select(_mapper.Map<Movie, MovieDto>);
 
             return Ok(movies);

@@ -12,6 +12,7 @@ namespace Vidly
             CreateMap<Customer, CustomerDto>();
             CreateMap<Movie, MovieDto>();
             CreateMap<MembershipType, MembershipTypeDto>();
+            CreateMap<Genre, GenreDto>();
 
 
             // DTO to Domain
